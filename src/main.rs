@@ -1,6 +1,7 @@
 use std::env;
 mod new;
 mod terminal;
+mod build;
 
 extern crate exitcode;
 
@@ -17,6 +18,7 @@ fn handle_args(args: &Vec<String>) {
     if arg_count > 1 {
         match args[1].as_str() {
             "new" => new::handle_command(args),
+            "build" => build::handle_command(args),
             "help" => handle_help(args),
             _ => eprintln!("Error: Unknown Command"),
         };
@@ -32,6 +34,7 @@ fn handle_help(args: &Vec<String>) {
     } else {
         match args[2].as_str() {
             "new" => new::help(),
+            "build" => build::help(),
             _ => println!("Available Commands: {}", AVAILABLE_COMMANDS.join(", ")),
         }
     }
