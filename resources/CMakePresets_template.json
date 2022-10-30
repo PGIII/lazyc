@@ -9,8 +9,8 @@
     {
       "name": "default",
       "displayName": "Default Config",
-      "description": "Configure preset using Ninja generator",
-      "generator": "Ninja",
+      "description": "Configure preset using Makefile generator",
+      "generator": "Unix Makefiles",
       "binaryDir": "${sourceDir}/build/default/release",
       "cacheVariables": {
         "CMAKE_BUILD_TYPE": "Release",

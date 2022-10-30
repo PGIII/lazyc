@@ -1,4 +1,4 @@
-use std::{env, str, fmt};
+use std::{env, str};
 use std::path::{PathBuf, Path};
 use std::fs::{File, create_dir_all};
 use std::io::prelude::*;
@@ -34,6 +34,7 @@ fn create_new_project(name: &str, path_buf: PathBuf) -> std::io::Result<()> {
   create_dirs(path)?;
   new_project_write_cmake(path, name)?;
   write_main_c(path)?;
+  configure_cmake(path);
   Ok(())
 }
 
@@ -58,8 +59,11 @@ fn new_project_write_cmake(path: &Path, name: &str) -> std::io::Result<()> {
 }
 
 fn configure_cmake(path: &Path) {
-  let command = format!("cmake {} --preset Default", path.to_str());
+  println!("Running CMake Configure");
+  let command = format!("cmake {} --preset default", path.to_string_lossy());
   let output = terminal::run_command(&command);
   let stdout = str::from_utf8(&output.stdout).expect("Error Converting String");
+  let stderr = str::from_utf8(&output.stderr).expect("Error Converting String");
   print!("{}", stdout);
+  print!("{}", stderr);
 }
