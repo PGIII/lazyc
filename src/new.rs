@@ -20,6 +20,11 @@ pub fn handle_command(args: &Vec<String>) {
   }
 }
 
+pub fn help() {
+  println!("New Command Usage");
+  println!("lazyc new PROJECT_NAME PROJECT_PATH[optional]");
+}
+
 fn create_dirs(path: &Path) -> std::io::Result<()> {
   create_dir_all(path.join("src"))?;
   create_dir_all(path.join("build"))?;
