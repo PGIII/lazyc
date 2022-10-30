@@ -1,7 +1,8 @@
-use std::env;
+use std::{env, str, fmt};
 use std::path::{PathBuf, Path};
-use std::fs::{File, create_dir};
+use std::fs::{File, create_dir_all};
 use std::io::prelude::*;
+use crate::terminal;
 
 pub fn handle_command(args: &Vec<String>) {
   if args.len() < 3 {
@@ -20,9 +21,9 @@ pub fn handle_command(args: &Vec<String>) {
 }
 
 fn create_dirs(path: &Path) -> std::io::Result<()> {
-  create_dir(path.join("src"))?;
-  create_dir(path.join("build"))?;
-  create_dir(path.join("lib"))?;
+  create_dir_all(path.join("src"))?;
+  create_dir_all(path.join("build"))?;
+  create_dir_all(path.join("lib"))?;
   Ok(())
 }
 
@@ -31,17 +32,34 @@ fn create_new_project(name: &str, path_buf: PathBuf) -> std::io::Result<()> {
   let path = path_buf.as_path();
 
   create_dirs(path)?;
-
-  let cmake_path = path.join(Path::new("CmakeLists.txt"));
-  let cmake_file = File::create(cmake_path)?;
-  new_project_write_cmake(cmake_file, name)?;
+  new_project_write_cmake(path, name)?;
+  write_main_c(path)?;
   Ok(())
 }
 
-fn new_project_write_cmake(mut file: File, name: &str) -> std::io::Result<()> {
+fn write_main_c(path: &Path) -> std::io::Result<()> {
+  let mut main_file = File::create(path.join(Path::new("src/main.c")))?;
+  let main_bytes = include_bytes!("../resources/main_template.c");
+  main_file.write_all(main_bytes)?;
+  Ok(())
+}
+
+fn new_project_write_cmake(path: &Path, name: &str) -> std::io::Result<()> {
+  let mut cmake_file = File::create(path.join(Path::new("CmakeLists.txt")))?;
   let bytes = include_bytes!("../resources/CmakeLists_template.cmake");
   let as_string = String::from_utf8_lossy(bytes).to_string();
   let replaced_string = as_string.replace("PLACEHOLDER_PROJECT_NAME", name);
-  file.write_all(replaced_string.as_bytes())?;
+  cmake_file.write_all(replaced_string.as_bytes())?;
+
+  let mut cmake_presets_file = File::create(path.join(Path::new("CMakePresets.json")))?;
+  let presets_bytes = include_bytes!("../resources/CmakePresets_template.json");
+  cmake_presets_file.write_all(presets_bytes)?;
   Ok(())
+}
+
+fn configure_cmake(path: &Path) {
+  let command = format!("cmake {} --preset Default", path.to_str());
+  let output = terminal::run_command(&command);
+  let stdout = str::from_utf8(&output.stdout).expect("Error Converting String");
+  print!("{}", stdout);
 }

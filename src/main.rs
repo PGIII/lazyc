@@ -1,11 +1,16 @@
 use std::env;
+use std::str;
 mod new;
+mod terminal;
 
 extern crate exitcode;
 
 fn main() {
     //let bytes = include_bytes!("../resources/test.txt");
     //print!("{}", String::from_utf8_lossy(bytes));
+    let output = terminal::run_command("echo \"test\"");
+    let stdout = str::from_utf8(&output.stdout).expect("Error Converting String");
+    print!("{}", stdout);
     let args: Vec<String> = env::args().collect();
     handle_args(&args);
 }
