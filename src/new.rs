@@ -1,6 +1,6 @@
 use std::env;
 use std::path::{PathBuf, Path};
-use std::fs::File;
+use std::fs::{File, create_dir};
 use std::io::prelude::*;
 
 pub fn handle_command(args: &Vec<String>) {
@@ -19,9 +19,18 @@ pub fn handle_command(args: &Vec<String>) {
   }
 }
 
+fn create_dirs(path: &Path) -> std::io::Result<()> {
+  create_dir(path.join("src"))?;
+  create_dir(path.join("build"))?;
+  create_dir(path.join("lib"))?;
+  Ok(())
+}
+
 fn create_new_project(name: &str, path_buf: PathBuf) -> std::io::Result<()> {
   println!("Creating {} at {}", name, path_buf.display());
   let path = path_buf.as_path();
+
+  create_dirs(path)?;
 
   let cmake_path = path.join(Path::new("CmakeLists.txt"));
   let cmake_file = File::create(cmake_path)?;
