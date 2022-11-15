@@ -4,6 +4,7 @@ mod terminal;
 mod build;
 mod module;
 mod run;
+mod cmake;
 
 extern crate exitcode;
 
@@ -23,6 +24,7 @@ fn handle_args(args: &Vec<String>) {
             "build" => build::handle_command(args),
             "help" => handle_help(args),
             "module" => module::handle_command(),
+            "run" => run::handle_command(args),
             _ => eprintln!("Error: Unknown Command"),
         };
     } else {
@@ -39,6 +41,7 @@ fn handle_help(args: &Vec<String>) {
             "new" => new::help(),
             "build" => build::help(),
             "module" => module::help(),
+            "run" => run::help(),
             _ => println!("Available Commands: {}", AVAILABLE_COMMANDS.join(", ")),
         }
     }
