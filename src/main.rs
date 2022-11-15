@@ -3,6 +3,7 @@ mod new;
 mod terminal;
 mod build;
 mod module;
+mod run;
 
 extern crate exitcode;
 
