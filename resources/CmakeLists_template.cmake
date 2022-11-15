@@ -3,11 +3,11 @@ project(PLACEHOLDER_PROJECT_NAME C CXX ASM)
 
 set(CMAKE_COLOR_DIAGNOSTICS ON)
 if(NOT CMAKE_BUILD_TYPE)
-  set(CMAKE_BUILD_TYPE Release)
+	set(CMAKE_BUILD_TYPE Release)
 endif()
 
 add_executable(PLACEHOLDER_PROJECT_NAME)
 
-target_sources(PLACEHOLDER_PROJECT_NAME PUBLIC
-  src/main.c
+target_sources(PLACEHOLDER_PROJECT_NAME 
+	PUBLIC src/main.c
 )
