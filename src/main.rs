@@ -2,6 +2,7 @@ use std::env;
 mod new;
 mod terminal;
 mod build;
+mod module;
 
 extern crate exitcode;
 
@@ -20,6 +21,7 @@ fn handle_args(args: &Vec<String>) {
             "new" => new::handle_command(args),
             "build" => build::handle_command(args),
             "help" => handle_help(args),
+            "module" => module::handle_command(),
             _ => eprintln!("Error: Unknown Command"),
         };
     } else {
@@ -35,6 +37,7 @@ fn handle_help(args: &Vec<String>) {
         match args[2].as_str() {
             "new" => new::help(),
             "build" => build::help(),
+            "module" => module::help(),
             _ => println!("Available Commands: {}", AVAILABLE_COMMANDS.join(", ")),
         }
     }

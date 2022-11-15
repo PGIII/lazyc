@@ -6,6 +6,8 @@ if(NOT CMAKE_BUILD_TYPE)
   set(CMAKE_BUILD_TYPE Release)
 endif()
 
-add_executable(PLACEHOLDER_PROJECT_NAME 
+add_executable(PLACEHOLDER_PROJECT_NAME)
+
+target_sources(PLACEHOLDER_PROJECT_NAME PUBLIC
   src/main.c
 )

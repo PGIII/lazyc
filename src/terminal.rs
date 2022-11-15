@@ -13,5 +13,6 @@ pub fn run_command(command: &str) -> Output{
             .output()
             .expect("failed to execute process")
   };
+  println!("{}", command);
   return output;
 }
