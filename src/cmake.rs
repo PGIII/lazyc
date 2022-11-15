@@ -47,7 +47,7 @@ pub fn get_exe_name(path: &str) -> String {
     for line in lines {
       if let Ok(line_string) = line {
         if line_string.starts_with("add_executable") {    
-          let split_vector: Vec<&str> = line_string.split(['(', ' ', '\t', '\n']).collect();
+          let split_vector: Vec<&str> = line_string.split(['(', ')', ' ', '\t', '\n']).collect();
           return split_vector[1].to_string();
         }
       }
