@@ -23,11 +23,9 @@ fn create_new_module() {
   }
 }
 
-fn insert_into_target_sources() {
+//fn insert_into_target_sources() {}
 
-}
-
-fn validate_cmake_lists() -> Result<String,std::io::Error> {
+fn validate_cmake_lists() -> bool {
   let path = env::current_dir()
     .expect("Couldnt Get Current Dir");
   let cmake_path = path.join(Path::new("CmakeLists.txt"));
@@ -51,8 +49,9 @@ fn validate_cmake_lists() -> Result<String,std::io::Error> {
   }  
 
   if !has_exe && !has_lib {
-    Err("No Exe Or Lib Defined in CmakeLists");
+    return false;
+    //Err("No Exe Or Lib Defined in CmakeLists");
   }
 
-  Ok("Blah");
+  return true;
 }
