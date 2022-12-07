@@ -1,7 +1,7 @@
 use std::path::Path;
 use std::fs;
 use std::fs::File;
-use std::io::{self, BufRead};
+use std::io::{self, BufRead, ErrorKind};
 use std::str;
 use crate::terminal;
 
@@ -98,6 +98,19 @@ pub fn configure(path: &str, preset: &str) {
 	print!("{}", stderr);
 }
 
+pub fn get_preset_binary_dir(path: &str, preset: &str) -> Result<String, io::Error>{
+	let full_path = path.to_string() + "/CMakePresets.json";
+	let file = fs::read_to_string(&full_path).expect("Error Opening Preset File");
+  let result = json::parse(&file).expect("Error Parsing Presets File");
+  for i in 0..result["configurePresets"].len() {
+		if result["configurePresets"][i]["name"] == preset {
+			let mut dir = result["configurePresets"][i]["binaryDir"].to_string();
+			dir = dir.replace("${sourceDir}", path);
+			return Ok(dir);
+		}
+  }
+	return Err(io::Error::from(ErrorKind::NotFound));
+}
 
 fn strip_string(string:&str, string_to_remove:&str) -> String{
 	//split on string then collect
