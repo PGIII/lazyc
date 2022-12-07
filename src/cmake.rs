@@ -3,6 +3,8 @@ use std::fs;
 use std::fs::File;
 use std::io::{self, BufRead};
 use std::str;
+use crate::terminal;
+
 ///
 /// Validate CMake Lists in passed Dir
 /// 
@@ -85,6 +87,17 @@ pub fn add_to_target_sources(path: &str, target_name: &str, new_source_file_path
 		.expect("Error Writing Out CMakeLists");
 
 }
+
+pub fn configure(path: &str, preset: &str) {
+	println!("Running CMake Configure");
+	let command = format!("cmake {} --preset {}", path, preset);
+	let output = terminal::run_command(&command);
+	let stdout = str::from_utf8(&output.stdout).expect("Error Converting String");
+	let stderr = str::from_utf8(&output.stderr).expect("Error Converting String");
+	print!("{}", stdout);
+	print!("{}", stderr);
+}
+
 
 fn strip_string(string:&str, string_to_remove:&str) -> String{
 	//split on string then collect
