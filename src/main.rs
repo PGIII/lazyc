@@ -6,6 +6,7 @@ mod module;
 mod run;
 mod cmake;
 mod configure;
+mod clean;
 
 extern crate exitcode;
 
@@ -27,6 +28,7 @@ fn handle_args(args: &Vec<String>) {
 			"module" => module::handle_command(args),
 			"run" => run::handle_command(args),
 			"configure" => configure::handle_command(args),
+			"full-clean" | "clean" => clean::handle_command(args),
 			_ => eprintln!("Error: Unknown Command"),
 		};
 	} else {
@@ -45,6 +47,7 @@ fn handle_help(args: &Vec<String>) {
 			"module" => module::help(),
 			"run" => run::help(),
 			"configure" => configure::help(),
+			"full-clean" | "clean" => clean::help(),
 			_ => println!("Available Commands: {}", AVAILABLE_COMMANDS.join(", ")),
 		}
 	}
