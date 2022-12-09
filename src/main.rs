@@ -21,7 +21,7 @@ fn main() {
 fn handle_args(args: &Vec<String>) {
 	let arg_count = args.len();//there will always be one argument
 	if arg_count > 1 {
-		match args[1].as_str() {
+		match args[1].to_lowercase().as_str() {
 			"new" => new::handle_command(args),
 			"build" | "rebuild" => build::handle_command(args),
 			"help" => handle_help(args),
@@ -41,7 +41,7 @@ fn handle_help(args: &Vec<String>) {
 	if args.len() < 3 {
 		println!("Available Commands: {}", AVAILABLE_COMMANDS.join(", "));
 	} else {
-		match args[2].as_str() {
+		match args[2].as_str().to_lowercase().as_str() {
 			"new" => new::help(),
 			"build" | "rebuild" => build::help(),
 			"module" => module::help(),
