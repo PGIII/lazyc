@@ -23,7 +23,7 @@ fn handle_args(args: &Vec<String>) {
 	if arg_count > 1 {
 		match args[1].as_str() {
 			"new" => new::handle_command(args),
-			"build" => build::handle_command(args),
+			"build" | "rebuild" => build::handle_command(args),
 			"help" => handle_help(args),
 			"module" => module::handle_command(args),
 			"run" => run::handle_command(args),
@@ -43,7 +43,7 @@ fn handle_help(args: &Vec<String>) {
 	} else {
 		match args[2].as_str() {
 			"new" => new::help(),
-			"build" => build::help(),
+			"build" | "rebuild" => build::help(),
 			"module" => module::help(),
 			"run" => run::help(),
 			"configure" => configure::help(),
