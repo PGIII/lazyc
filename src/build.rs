@@ -7,7 +7,6 @@ pub fn help() {
 }
 
 pub fn handle_command(args: &Vec<String>) {
-  
   let preset;
   if args.len() > 2 {
     preset = args[2].as_str();
