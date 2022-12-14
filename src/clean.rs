@@ -35,5 +35,7 @@ fn run_clean(preset: &str) {
 }
 
 fn run_full_clean() -> std::io::Result<()> {
+  println!("Full Cleaning");
+  println!("Removing Build dir");
   return fs::remove_dir_all("build");
 }
