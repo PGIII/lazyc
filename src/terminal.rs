@@ -1,7 +1,9 @@
-use std::process::{Command, Output};
+use std::process::{Command, Output, Child};
 use colored::Colorize;
 
 pub fn run_command(command: &str) -> Output{
+	let formatted = format!("{}", command).green().bold();
+	println!("{}", formatted);
 	let output = if cfg!(target_os = "windows") {
 		Command::new("cmd")
 						.args(["/C", command])
@@ -14,7 +16,15 @@ pub fn run_command(command: &str) -> Output{
 						.output()
 						.expect("failed to execute process")
 	};
+	return output;
+}
+
+pub fn spawn_command(command: &str) -> Child {
 	let formatted = format!("{}", command).green().bold();
 	println!("{}", formatted);
-	return output;
+	return Command::new("sh")
+		.arg("-c")
+		.arg(command)
+		.spawn()
+		.expect("Error Spawning Process");
 }
