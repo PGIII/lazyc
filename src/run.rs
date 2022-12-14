@@ -1,5 +1,5 @@
 //Run should invoke build and then run the exe that was created
-use std::{env, str};
+use std::{env};
 use crate::cmake;
 use crate::build;
 use crate::terminal;
@@ -28,11 +28,11 @@ pub fn handle_command(args: &Vec<String>) {
   let exe = bin_dir;
   let exe_name = cmake::get_exe_name(&path_string);
   let command = exe + "/" + &exe_name;
-  let output = terminal::run_command(&command);
-  let stdout = str::from_utf8(&output.stdout).expect("Error Converting String");
-  let stderr = str::from_utf8(&output.stderr).expect("Error Converting String");
-  print!("{}", stdout);
-  print!("{}", stderr);
-
-  
+  let mut child_process = terminal::spawn_command(&command);
+  child_process.wait().unwrap();//if we error out panic
+  // let output = terminal::run_command(&command);
+  // let stdout = str::from_utf8(&output.stdout).expect("Error Converting String");
+  // let stderr = str::from_utf8(&output.stderr).expect("Error Converting String");
+  // print!("{}", stdout);
+  // print!("{}", stderr);
 }
