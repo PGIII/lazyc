@@ -17,7 +17,7 @@ pub fn handle_command(args: &Vec<String>) {
     preset = &args[2];
   }
 
-  build::handle_command(&vec!["internal".to_string(), "build".to_string(), preset.to_string()]);
+  build::execute(preset, false);
 
   let path = env::current_dir()
     .expect("Error Getting Current Dir");

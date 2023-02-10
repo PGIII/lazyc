@@ -4,20 +4,7 @@ use std::io::Write;
 use std::path::{Path};
 use crate::cmake;
 
-pub fn help() {
-	println!("Module Command Usage");
-	println!("lazyc module MODULE_NAME");
-}
-
-pub fn handle_command(args: &Vec<String>) {
-	if args.len() < 3 {
-		panic!("Error CMD module: module name not supplied");
-	} else {
-		create_new_module(&args[2]);
-	}
-}
-
-fn create_new_module(module_name: &str) {
+pub fn create(module_name: &str) {
 	//First make sure we are in a dir with a lib or exe CMakeLists
 	let working_path = env::current_dir()
 		.expect("Couldnt Get Current Dir")
