@@ -50,7 +50,6 @@ fn new_handle_args(args: Args) {
 fn handle_args() {
 	let args: Vec<String> = env::args().collect();
 	match env::args().nth(1).expect("Too Few Args").as_str() {
-		"build" | "rebuild" => commands::build::handle_command(&args),
 		"help" => handle_help(&args),
 		"module" => commands::module::handle_command(&args),
 		"run" => commands::run::handle_command(&args),
@@ -65,7 +64,6 @@ fn handle_help(args: &Vec<String>) {
 		println!("Available Commands: {}", AVAILABLE_COMMANDS.join(", "));
 	} else {
 		match args[2].as_str().to_lowercase().as_str() {
-			"build" | "rebuild" => commands::build::help(),
 			"module" => commands::module::help(),
 			"run" => commands::run::help(),
 			"configure" => commands::configure::help(),
