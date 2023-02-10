@@ -4,19 +4,7 @@ use crate::cmake;
 use crate::commands::build;
 use crate::terminal;
 
-pub fn help() {
-  println!("Run Function builds and runs executable");
-}
-
-pub fn handle_command(args: &Vec<String>) {
-  let preset;
-  //if no args assume its in build/default/release
-  if args.len() < 3 {
-    preset = "default";
-  } else {
-    preset = &args[2];
-  }
-
+pub fn execute(preset: &str) {
   build::execute(preset, false);
 
   let path = env::current_dir()

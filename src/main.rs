@@ -34,7 +34,11 @@ pub enum Commands {
 	Module {
 		#[arg(short, long, help = "Name Of Module")]
 		name: String,
-	}
+	},
+	Run {
+		#[arg(short, long, help = "CMake Preset To Use", default_value = "default")]
+		preset: String,
+	},
 }
 
 fn main() {
@@ -49,13 +53,13 @@ fn new_handle_args(args: Args) {
 		Commands::Build { preset } => {commands::build::execute(&preset, false)},
 		Commands::Rebuild { preset } => {commands::build::execute(&preset, true)},
 		Commands::Module { name } => {commands::module::create(&name)},
+		Commands::Run {preset} => {commands::run::execute(&preset)},
 	}
 }
 
 fn handle_args() {
 	let args: Vec<String> = env::args().collect();
 	match env::args().nth(1).expect("Too Few Args").as_str() {
-		"run" => commands::run::handle_command(&args),
 		"configure" => commands::configure::handle_command(&args),
 		"full-clean" | "clean" => commands::clean::handle_command(&args),
 		_ => eprintln!("Error: Unknown Command"),
@@ -67,7 +71,6 @@ fn handle_help(args: &Vec<String>) {
 		println!("Available Commands: {}", AVAILABLE_COMMANDS.join(", "));
 	} else {
 		match args[2].as_str().to_lowercase().as_str() {
-			"run" => commands::run::help(),
 			"configure" => commands::configure::help(),
 			"full-clean" | "clean" => commands::clean::help(),
 			_ => println!("Available Commands: {}", AVAILABLE_COMMANDS.join(", ")),
