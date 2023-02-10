@@ -4,26 +4,15 @@ use std::fs::{File, create_dir_all};
 use std::io::prelude::*;
 use crate::terminal;
 
-pub fn handle_command(args: &Vec<String>) {
-  if args.len() < 3 {
-	  eprintln!("Error CMD New: Project name not supplied", );
-	  std::process::exit(exitcode::USAGE);        
-  } else {
-	  let path;
-	  if args.len() >= 4 {
-		  path = PathBuf::from(&args[3]);
-	  } else {
-		  path = env::current_dir().expect("Couldnt Get Current Dir");
-	  }
-	  println!("Creating Project: {}", args[2]);
-	  create_new_project(&args[2], path).expect("Error Creating Project");
-  }
+
+pub fn execute(name: &str, path_str: &str) {
+	let path;
+	path = PathBuf::from(path_str);
+	println!("Creating Project: {}", name);
+	create_new_project(name, path)
+		.expect("Error Creating Project");
 }
 
-pub fn help() {
-	println!("New Command Usage");
-	println!("lazyc new PROJECT_NAME PROJECT_PATH[optional]");
-}
 
 fn create_dirs(path: &Path) -> std::io::Result<()> {
 	create_dir_all(path.join("src"))?;

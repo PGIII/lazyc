@@ -16,28 +16,35 @@ pub struct Args {
 }
 
 #[derive(Subcommand)]
-enum Commands {
+pub enum Commands {
 	New {
 		#[arg(short, long, help = "Name Of Project To Create")]
 		name: String,
-		#[arg(short, long)]
+		#[arg(short, long, help = "Path To Create Project At", default_value = "./")]
 		path: String,
 	},
 	Build {
 		#[arg(short, long, help = "CMake Preset To Use")]
 		preset: String,
-	},
+	}
 }
 
 fn main() {
 	let args = Args::parse();
-	handle_args();
+	new_handle_args(args);
+	//handle_args();
+}
+
+fn new_handle_args(args: Args) {
+	match args.command {
+		Commands::New { name, path } => {commands::new::execute(&name, &path)},
+		_ => {}
+	}
 }
 
 fn handle_args() {
 	let args: Vec<String> = env::args().collect();
 	match env::args().nth(1).expect("Too Few Args").as_str() {
-		"new" => commands::new::handle_command(&args),
 		"build" | "rebuild" => commands::build::handle_command(&args),
 		"help" => handle_help(&args),
 		"module" => commands::module::handle_command(&args),
@@ -53,7 +60,6 @@ fn handle_help(args: &Vec<String>) {
 		println!("Available Commands: {}", AVAILABLE_COMMANDS.join(", "));
 	} else {
 		match args[2].as_str().to_lowercase().as_str() {
-			"new" => commands::new::help(),
 			"build" | "rebuild" => commands::build::help(),
 			"module" => commands::module::help(),
 			"run" => commands::run::help(),
