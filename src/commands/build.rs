@@ -1,24 +1,13 @@
 use std::str;
 use crate::terminal;
 
-pub fn help() {
-  println!("Build Usage");
-  println!("lazyc build PRESET[optional]");
-}
 
-pub fn handle_command(args: &Vec<String>) {
-  let preset;
-  if args.len() > 2 {
-    preset = args[2].as_str();
-  } else {
-    preset = "default";
-  }
-  if args[1] == "rebuild" {
+pub fn execute(preset: &str, rebuild: bool) {
+  if rebuild {
     run_rebuild(preset);
   } else {
     run_build(preset);
   }
-  
 }
 
 fn run_build(preset: &str) {

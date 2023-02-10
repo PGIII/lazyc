@@ -24,7 +24,11 @@ pub enum Commands {
 		path: String,
 	},
 	Build {
-		#[arg(short, long, help = "CMake Preset To Use")]
+		#[arg(short, long, help = "CMake Preset To Use", default_value = "default")]
+		preset: String,
+	},
+	Rebuild {
+		#[arg(short, long, help = "CMake Preset To Use", default_value = "default")]
 		preset: String,
 	}
 }
@@ -38,7 +42,8 @@ fn main() {
 fn new_handle_args(args: Args) {
 	match args.command {
 		Commands::New { name, path } => {commands::new::execute(&name, &path)},
-		_ => {}
+		Commands::Build { preset } => {commands::build::execute(&preset, false)},
+		Commands::Rebuild { preset } => {commands::build::execute(&preset, true)},
 	}
 }
 
