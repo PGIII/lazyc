@@ -2,28 +2,7 @@ use std::str;
 use std::fs;
 use crate::terminal;
 
-pub fn help() {
-  println!("Build Usage");
-  println!("lazyc clean PRESET[optional]");
-}
-
-pub fn handle_command(args: &Vec<String>) {
-  
-  let preset;
-  if args.len() > 2 {
-    preset = args[2].as_str();
-  } else {
-    preset = "default";
-  }
-
-  if args[1] == "full-clean" {
-    run_full_clean().unwrap();
-  } else {
-    run_clean(preset);
-  }
-}
-
-fn run_clean(preset: &str) {
+pub fn run_clean(preset: &str) {
   println!("Cleaning");
   //let build_path = path.join("build");
   let command = format!("cmake --build --preset {} --target clean", preset);
@@ -34,8 +13,8 @@ fn run_clean(preset: &str) {
   print!("{}", stderr);
 }
 
-fn run_full_clean() -> std::io::Result<()> {
+pub fn run_full_clean() {
   println!("Full Cleaning");
   println!("Removing Build dir");
-  return fs::remove_dir_all("build");
+  fs::remove_dir_all("build").expect("Cant Remove Dir");
 }

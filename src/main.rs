@@ -1,4 +1,3 @@
-use std::env;
 use clap::{Parser, Subcommand};
 
 mod commands;
@@ -6,8 +5,6 @@ mod cmake;
 mod terminal;
 
 extern crate exitcode;
-
-const AVAILABLE_COMMANDS: [&str;2] = ["new", "build"];
 
 #[derive(Parser)]
 pub struct Args {
@@ -17,28 +14,45 @@ pub struct Args {
 
 #[derive(Subcommand)]
 pub enum Commands {
+	/// Create New CMake Project
 	New {
 		#[arg(short, long, help = "Name Of Project To Create")]
 		name: String,
 		#[arg(short, long, help = "Path To Create Project At", default_value = "./")]
 		path: String,
 	},
+	/// Build Program
 	Build {
 		#[arg(short, long, help = "CMake Preset To Use", default_value = "default")]
 		preset: String,
 	},
+	/// Clean And Build Program
 	Rebuild {
 		#[arg(short, long, help = "CMake Preset To Use", default_value = "default")]
 		preset: String,
 	},
+	/// Create New Module
 	Module {
 		#[arg(short, long, help = "Name Of Module")]
 		name: String,
 	},
+	/// Build And Run Program
 	Run {
 		#[arg(short, long, help = "CMake Preset To Use", default_value = "default")]
 		preset: String,
 	},
+	/// Configure With Passed Preset
+	Configure {
+		#[arg(short, long, help = "CMake Preset To Use", default_value = "default")]
+		preset: String,
+	},
+	/// Run CMake Created clean for Target
+	Clean {
+		#[arg(short, long, help = "CMake Preset To Use", default_value = "default")]
+		preset: String,
+	},
+	/// Clean All CMake Generated Files
+	Fullclean,
 }
 
 fn main() {
@@ -54,26 +68,8 @@ fn new_handle_args(args: Args) {
 		Commands::Rebuild { preset } => {commands::build::execute(&preset, true)},
 		Commands::Module { name } => {commands::module::create(&name)},
 		Commands::Run {preset} => {commands::run::execute(&preset)},
-	}
-}
-
-fn handle_args() {
-	let args: Vec<String> = env::args().collect();
-	match env::args().nth(1).expect("Too Few Args").as_str() {
-		"configure" => commands::configure::handle_command(&args),
-		"full-clean" | "clean" => commands::clean::handle_command(&args),
-		_ => eprintln!("Error: Unknown Command"),
-	}
-}
-
-fn handle_help(args: &Vec<String>) {
-	if args.len() < 3 {
-		println!("Available Commands: {}", AVAILABLE_COMMANDS.join(", "));
-	} else {
-		match args[2].as_str().to_lowercase().as_str() {
-			"configure" => commands::configure::help(),
-			"full-clean" | "clean" => commands::clean::help(),
-			_ => println!("Available Commands: {}", AVAILABLE_COMMANDS.join(", ")),
-		}
+		Commands::Configure { preset } => {commands::configure::execute(&preset)},
+		Commands::Clean { preset } => {commands::clean::run_clean(&preset)},
+		Commands::Fullclean => {commands::clean::run_full_clean()}
 	}
 }

@@ -1,4 +1,4 @@
-use std::{env, str};
+use std::{str};
 use std::path::{PathBuf, Path};
 use std::fs::{File, create_dir_all};
 use std::io::prelude::*;
