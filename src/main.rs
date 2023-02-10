@@ -1,12 +1,7 @@
 use std::env;
-mod new;
-mod terminal;
-mod build;
-mod module;
-mod run;
+mod commands;
 mod cmake;
-mod configure;
-mod clean;
+mod terminal;
 
 extern crate exitcode;
 
@@ -22,13 +17,13 @@ fn handle_args(args: &Vec<String>) {
 	let arg_count = args.len();//there will always be one argument
 	if arg_count > 1 {
 		match args[1].to_lowercase().as_str() {
-			"new" => new::handle_command(args),
-			"build" | "rebuild" => build::handle_command(args),
+			"new" => commands::new::handle_command(args),
+			"build" | "rebuild" => commands::build::handle_command(args),
 			"help" => handle_help(args),
-			"module" => module::handle_command(args),
-			"run" => run::handle_command(args),
-			"configure" => configure::handle_command(args),
-			"full-clean" | "clean" => clean::handle_command(args),
+			"module" => commands::module::handle_command(args),
+			"run" => commands::run::handle_command(args),
+			"configure" => commands::configure::handle_command(args),
+			"full-clean" | "clean" => commands::clean::handle_command(args),
 			_ => eprintln!("Error: Unknown Command"),
 		};
 	} else {
@@ -42,12 +37,12 @@ fn handle_help(args: &Vec<String>) {
 		println!("Available Commands: {}", AVAILABLE_COMMANDS.join(", "));
 	} else {
 		match args[2].as_str().to_lowercase().as_str() {
-			"new" => new::help(),
-			"build" | "rebuild" => build::help(),
-			"module" => module::help(),
-			"run" => run::help(),
-			"configure" => configure::help(),
-			"full-clean" | "clean" => clean::help(),
+			"new" => commands::new::help(),
+			"build" | "rebuild" => commands::build::help(),
+			"module" => commands::module::help(),
+			"run" => commands::run::help(),
+			"configure" => commands::configure::help(),
+			"full-clean" | "clean" => commands::clean::help(),
 			_ => println!("Available Commands: {}", AVAILABLE_COMMANDS.join(", ")),
 		}
 	}

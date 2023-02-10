@@ -1,7 +1,7 @@
 //Run should invoke build and then run the exe that was created
 use std::{env};
 use crate::cmake;
-use crate::build;
+use crate::commands::build;
 use crate::terminal;
 
 pub fn help() {

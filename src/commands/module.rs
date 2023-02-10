@@ -46,8 +46,8 @@ fn create_module_files(path: &str, module_name: &str) {
 	let mut header_file = File::create(Path::new(&header_path))
 		.expect("Error Creating Module Header File");
 
-	let src_temp_bytes = include_bytes!("../resources/module_template.c");
-	let header_temp_bytes = include_bytes!("../resources/module_template.h");
+	let src_temp_bytes = include_bytes!("../../resources/module_template.c");
+	let header_temp_bytes = include_bytes!("../../resources/module_template.h");
 	let mut src_temp_str = String::from_utf8_lossy(src_temp_bytes).to_string();
 	let mut header_temp_str = String::from_utf8_lossy(header_temp_bytes).to_string();
 	src_temp_str = src_temp_str.replace("PLACEHOLDER_MODULE_NAME", module_name);

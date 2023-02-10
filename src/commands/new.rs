@@ -45,20 +45,20 @@ fn create_new_project(name: &str, path_buf: PathBuf) -> std::io::Result<()> {
 
 fn write_main_c(path: &Path) -> std::io::Result<()> {
 	let mut main_file = File::create(path.join(Path::new("src/main.c")))?;
-	let main_bytes = include_bytes!("../resources/main_template.c");
+	let main_bytes = include_bytes!("../../resources/main_template.c");
 	main_file.write_all(main_bytes)?;
 	Ok(())
 }
 
 fn new_project_write_cmake(path: &Path, name: &str) -> std::io::Result<()> {
 	let mut cmake_file = File::create(path.join(Path::new("CMakeLists.txt")))?;
-	let bytes = include_bytes!("../resources/CMakeLists_template.cmake");
+	let bytes = include_bytes!("../../resources/CMakeLists_template.cmake");
 	let as_string = String::from_utf8_lossy(bytes).to_string();
 	let replaced_string = as_string.replace("PLACEHOLDER_PROJECT_NAME", name);
 	cmake_file.write_all(replaced_string.as_bytes())?;
 
 	let mut cmake_presets_file = File::create(path.join(Path::new("CMakePresets.json")))?;
-	let presets_bytes = include_bytes!("../resources/CMakePresets_template.json");
+	let presets_bytes = include_bytes!("../../resources/CMakePresets_template.json");
 	cmake_presets_file.write_all(presets_bytes)?;
 	Ok(())
 }
