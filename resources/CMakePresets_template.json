@@ -9,11 +9,25 @@
 		{
 			"name": "default",
 			"displayName": "Default Config",
-			"description": "Configure preset using Makefile generator",
+			"description": "Release Preset",
 			"generator": "Unix Makefiles",
-			"binaryDir": "${sourceDir}/build/default/release",
+			"binaryDir": "${sourceDir}/build/release",
 			"cacheVariables": {
 				"CMAKE_BUILD_TYPE": "Release",
+				"CMAKE_EXPORT_COMPILE_COMMANDS": {
+					"type": "BOOL",
+					"value": "ON"
+				}
+			}
+		},
+		{
+			"name": "debug",
+			"displayName": "Default Config",
+			"description": "Debug Preset",
+			"generator": "Unix Makefiles",
+			"binaryDir": "${sourceDir}/build/release",
+			"cacheVariables": {
+				"CMAKE_BUILD_TYPE": "Debug",
 				"CMAKE_EXPORT_COMPILE_COMMANDS": {
 					"type": "BOOL",
 					"value": "ON"
@@ -26,6 +40,14 @@
 			"name": "default",
 			"configurePreset": "default",
 			"jobs": 4
+		}
+	],
+	"testPresets": [
+		{
+		  "name": "default",
+		  "configurePreset": "default",
+		  "output": {"outputOnFailure": true},
+		  "execution": {"noTestsAction": "error", "stopOnFailure": true}
 		}
 	]
 }
