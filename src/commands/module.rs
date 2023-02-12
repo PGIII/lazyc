@@ -13,9 +13,9 @@ pub fn create(module_name: &str) {
 		.expect("Error Converting Current Path to String");
 
 	if cmake::lists::validate(&working_path) {
-		let target_name = cmake::actions::get_exe_name(&working_path);
+		let target_name = cmake::lists::get_exe_name(&working_path);
 		let src_path = format!("src/{module_name}.c");
-		cmake::actions::add_to_target_sources(&working_path, &target_name, &src_path);
+		cmake::lists::add_to_target_sources(&working_path, &target_name, &src_path);
 		create_module_files(&working_path, module_name);
 		//now insert module c file into target_sources
 	} else {
