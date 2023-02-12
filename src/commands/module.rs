@@ -12,10 +12,10 @@ pub fn create(module_name: &str) {
 		.into_string()
 		.expect("Error Converting Current Path to String");
 
-	if cmake::validate(&working_path) {
-		let target_name = cmake::get_exe_name(&working_path);
+	if cmake::actions::validate(&working_path) {
+		let target_name = cmake::actions::get_exe_name(&working_path);
 		let src_path = format!("src/{module_name}.c");
-		cmake::add_to_target_sources(&working_path, &target_name, &src_path);
+		cmake::actions::add_to_target_sources(&working_path, &target_name, &src_path);
 		create_module_files(&working_path, module_name);
 		//now insert module c file into target_sources
 	} else {

@@ -8,5 +8,5 @@ pub fn execute(preset: &str) {
 		.into_string()
 		.expect("Error Converting Current Path to String");
 
-  cmake::configure(&path, preset);
+  cmake::actions::configure(&path, preset);
 }

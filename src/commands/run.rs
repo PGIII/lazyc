@@ -12,9 +12,9 @@ pub fn execute(preset: &str) {
   let path_string = path.into_os_string().into_string()
     .expect("Error Converting Path To String");
 
-  let bin_dir = cmake::get_preset_binary_dir(&path_string, preset).expect("Error Finding Exe");
+  let bin_dir = cmake::actions::get_preset_binary_dir(&path_string, preset).expect("Error Finding Exe");
   let exe = bin_dir;
-  let exe_name = cmake::get_exe_name(&path_string);
+  let exe_name = cmake::actions::get_exe_name(&path_string);
   let command = exe + "/" + &exe_name;
   let mut child_process = terminal::spawn_command(&command);
   child_process.wait().unwrap();//if we error out panic
