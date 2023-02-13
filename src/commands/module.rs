@@ -4,7 +4,7 @@ use std::io::Write;
 use std::path::{Path};
 use crate::cmake;
 
-pub fn create(module_name: &str) {
+pub fn create(module_name: &str, target_name_option: Option<String>) {
 	//First make sure we are in a dir with a lib or exe CMakeLists
 	let working_path = env::current_dir()
 		.expect("Couldnt Get Current Dir")
@@ -13,11 +13,16 @@ pub fn create(module_name: &str) {
 		.expect("Error Converting Current Path to String");
 
 	if cmake::lists::validate(&working_path) {
-		let target_name = cmake::lists::get_exe_name(&working_path);
+		let target_name;
+		match target_name_option {
+			Some(name) => {target_name = name},
+			None => {target_name = cmake::lists::get_exe_name(&working_path)}
+		}
 		let src_path = format!("src/{module_name}.c");
 		cmake::lists::add_to_target_sources(&working_path, &target_name, &src_path);
-		create_module_files(&working_path, module_name);
 		//now insert module c file into target_sources
+		create_module_files(&working_path, module_name);
+		println!("Module: {} Created for {}", module_name, target_name);
 	} else {
 		eprintln!("Invalid CMake");
 		std::process::exit(exitcode::OSFILE);        

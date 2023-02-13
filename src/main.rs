@@ -35,6 +35,8 @@ pub enum Commands {
 	Module {
 		#[arg(short, long, help = "Name Of Module")]
 		name: String,
+		#[arg(short, long, help = "Target Module should be added to")]
+		target: Option<String>,
 	},
 	/// Build And Run Program
 	Run {
@@ -66,7 +68,7 @@ fn new_handle_args(args: Args) {
 		Commands::New { name, path } => {commands::new::execute(&name, &path)},
 		Commands::Build { preset } => {commands::build::execute(&preset, false)},
 		Commands::Rebuild { preset } => {commands::build::execute(&preset, true)},
-		Commands::Module { name } => {commands::module::create(&name)},
+		Commands::Module { name, target } => {commands::module::create(&name, target)},
 		Commands::Run {preset} => {commands::run::execute(&preset)},
 		Commands::Configure { preset } => {commands::configure::execute(&preset)},
 		Commands::Clean { preset } => {commands::clean::run_clean(&preset)},
