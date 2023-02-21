@@ -55,9 +55,5 @@ fn new_project_write_cmake(path: &Path, name: &str) -> std::io::Result<()> {
 fn configure_cmake(path: &Path) {
 	println!("Running CMake Configure");
 	let command = format!("cmake {} --preset default", path.to_string_lossy());
-	let output = terminal::run_command(&command);
-	let stdout = str::from_utf8(&output.stdout).expect("Error Converting String");
-	let stderr = str::from_utf8(&output.stderr).expect("Error Converting String");
-	print!("{}", stdout);
-	print!("{}", stderr);
+	terminal::run_command(&command);
 }

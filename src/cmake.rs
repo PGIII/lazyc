@@ -91,11 +91,7 @@ pub fn add_to_target_sources(path: &str, target_name: &str, new_source_file_path
 pub fn configure(path: &str, preset: &str) {
 	println!("Running CMake Configure");
 	let command = format!("cmake {} --preset {}", path, preset);
-	let output = terminal::run_command(&command);
-	let stdout = str::from_utf8(&output.stdout).expect("Error Converting String");
-	let stderr = str::from_utf8(&output.stderr).expect("Error Converting String");
-	print!("{}", stdout);
-	print!("{}", stderr);
+	terminal::run_command(&command);
 }
 
 pub fn get_preset_binary_dir(path: &str, preset: &str) -> Result<String, io::Error>{

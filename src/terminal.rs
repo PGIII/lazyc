@@ -1,22 +1,25 @@
-use std::process::{Command, Output, Child};
+use std::process::{Command, Child};
 use colored::Colorize;
-
-pub fn run_command(command: &str) -> Output{
+/// Runs command outputting stdout and stderr through parent
+/// panics if command returns error status code
+pub fn run_command(command: &str) {
 	let formatted = format!("{}", command).green().bold();
 	println!("{}", formatted);
-	let output = if cfg!(target_os = "windows") {
+	let status = if cfg!(target_os = "windows") {
 		Command::new("cmd")
 						.args(["/C", command])
-						.output()
+						.status()
 						.expect("failed to execute process")
 	} else {
 		Command::new("sh")
 						.arg("-c")
 						.arg(command)
-						.output()
+						.status()
 						.expect("failed to execute process")
 	};
-	return output;
+
+	assert!(status.success());
+
 }
 
 pub fn spawn_command(command: &str) -> Child {

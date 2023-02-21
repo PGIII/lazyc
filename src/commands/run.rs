@@ -18,9 +18,4 @@ pub fn execute(preset: &str) {
   let command = exe + "/" + &exe_name;
   let mut child_process = terminal::spawn_command(&command);
   child_process.wait().unwrap();//if we error out panic
-  // let output = terminal::run_command(&command);
-  // let stdout = str::from_utf8(&output.stdout).expect("Error Converting String");
-  // let stderr = str::from_utf8(&output.stderr).expect("Error Converting String");
-  // print!("{}", stdout);
-  // print!("{}", stderr);
 }
