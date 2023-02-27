@@ -2,6 +2,11 @@
 name = "lazyc"
 version = "0.5.1"
 edition = "2021"
+license = "MIT"
+keywords = ["cli", "cmake", "c", "cpp"]
+categories = ["command-line-utilities"]
+readme = "README.md"
+repository = "https://github.com/PGIII/lazyc/"
 
 # See more keys and their definitions at https://doc.rust-lang.org/cargo/reference/manifest.html
 
