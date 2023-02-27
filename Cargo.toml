@@ -3,6 +3,7 @@ name = "lazyc"
 version = "0.5.1"
 edition = "2021"
 license = "MIT"
+description = "Wrapper For CMake commands with CMakePresets"
 keywords = ["cli", "cmake", "c", "cpp"]
 categories = ["command-line-utilities"]
 readme = "README.md"
