@@ -5,3 +5,5 @@
 - [ ] add lists command that adds blank cmake lists file in current path
 - [ ] Add Check for build folder and cmake and run configure first if missing
 - [ ] Add support for custom Templates
+- [ ] Dont Ovewrite main if already exists
+- [ ] add .gitignore append if already exists
