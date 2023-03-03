@@ -108,6 +108,19 @@ pub fn get_preset_binary_dir(path: &str, preset: &str) -> Result<String, io::Err
     return Err(io::Error::from(ErrorKind::NotFound));
 }
 
+pub fn is_configured(path: &str, preset: &str) -> bool {
+    //easiest way to check for config is see if build dir specified by preset exists
+    let dir = get_preset_binary_dir(path, preset);
+    match dir {
+        Ok(dir) => {
+            return Path::new(&dir).exists();
+        },
+        Err(_) => {
+            return false;
+        }
+    }
+
+}
 fn strip_string(string: &str, string_to_remove: &str) -> String {
     //split on string then collect
     let new_string: String = string.split(string_to_remove).collect();
