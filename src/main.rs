@@ -16,39 +16,39 @@ pub struct Args {
 pub enum Commands {
     /// Create New CMake Project
     New {
-        #[arg(short, long, help = "Name Of Project To Create")]
+        #[arg(help = "Name Of Project To Create")]
         name: String,
         #[arg(short, long, help = "Path To Create Project At", default_value = "./")]
         path: String,
     },
     /// Build Program
     Build {
-        #[arg(short, long, help = "CMake Preset To Use", default_value = "default")]
+        #[arg(help = "CMake Preset To Use", default_value = "default")]
         preset: String,
     },
     /// Clean And Build Program
     Rebuild {
-        #[arg(short, long, help = "CMake Preset To Use", default_value = "default")]
+        #[arg(help = "CMake Preset To Use", default_value = "default")]
         preset: String,
     },
     /// Create New Module
     Module {
-        #[arg(short, long, help = "Name Of Module")]
+        #[arg(help = "Name Of Module")]
         name: String,
     },
     /// Build And Run Program
     Run {
-        #[arg(short, long, help = "CMake Preset To Use", default_value = "default")]
+        #[arg(help = "CMake Preset To Use", default_value = "default")]
         preset: String,
     },
     /// Configure With Passed Preset
     Configure {
-        #[arg(short, long, help = "CMake Preset To Use", default_value = "default")]
+        #[arg(help = "CMake Preset To Use", default_value = "default")]
         preset: String,
     },
     /// Run CMake Created clean for Target
     Clean {
-        #[arg(short, long, help = "CMake Preset To Use", default_value = "default")]
+        #[arg(help = "CMake Preset To Use", default_value = "default")]
         preset: String,
     },
     /// Clean All CMake Generated Files
